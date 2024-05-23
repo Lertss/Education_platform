@@ -1,18 +1,23 @@
 import uuid
 
-from sqlalchemy import UUID, Boolean, String
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy import Boolean, Column, String
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import declarative_base
 
 
-class Base(DeclarativeBase):
-    pass
+##############################
+# BLOCK WITH DATABASE MODELS #
+##############################
+
+Base = declarative_base()
 
 
 class User(Base):
     __tablename__ = "users"
 
-    user_id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
-    name: Mapped[str] = mapped_column(String, nullable=False)
-    surname: Mapped[str] = mapped_column(String, nullable=False)
-    email: Mapped[str] = mapped_column(String, nullable=False, unique=True)
-    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    user_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    name = Column(String, nullable=False)
+    surname = Column(String, nullable=False)
+    email = Column(String, nullable=False, unique=True)
+    is_active = Column(Boolean(), default=True)
+    hashed_password = Column(String, nullable=False)

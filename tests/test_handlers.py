@@ -1,11 +1,11 @@
-
 async def test_create_user(client, get_user_from_database):
     user_data = {
-        "name": "Barit",
-        "surname": "Veres",
-        "email": "lol@kek.com",
+        "name": "String",
+        "surname": "String",
+        "email": "user@example.com"
     }
-    resp = client.post("/user/", data=user_data)
+
+    resp = client.post("/user/", json=user_data)
     data_from_resp = resp.json()
     assert resp.status_code == 200
     assert data_from_resp["name"] == user_data["name"]
